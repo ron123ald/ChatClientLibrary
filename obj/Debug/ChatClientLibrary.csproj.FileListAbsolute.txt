@@ -1,0 +1,6 @@
+D:\Development\_SPIKE\testClient\ChatClientLibrary\bin\Debug\ChatClientLibrary.dll
+D:\Development\_SPIKE\testClient\ChatClientLibrary\bin\Debug\ChatClientLibrary.pdb
+D:\Development\_SPIKE\testClient\ChatClientLibrary\obj\Debug\ChatClientLibrary.dll
+D:\Development\_SPIKE\testClient\ChatClientLibrary\obj\Debug\ChatClientLibrary.pdb
+D:\Development\_SPIKE\testClient\ChatClientLibrary\bin\Debug\Newtonsoft.Json.dll
+D:\Development\_SPIKE\testClient\ChatClientLibrary\obj\Debug\ChatClientLibrary.csprojResolveAssemblyReference.cache
