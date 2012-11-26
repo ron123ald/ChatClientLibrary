@@ -5,21 +5,17 @@
     public class LeaveEventArgs
     {
         private string _userUniqueID = string.Empty;
+        private User _user = default(User);
 
-        public LeaveEventArgs()
+        public LeaveEventArgs(string username, string userUniqueID)
         {
-
+            this.User = new User(username, userUniqueID);
         }
 
-        public LeaveEventArgs(string userUniqueID)
+        public User User
         {
-            this.UserUniqueID = userUniqueID;
-        }
-
-        public string UserUniqueID
-        {
-            get { return this._userUniqueID; }
-            set { this._userUniqueID = value; }
+            get { return this._user; }
+            set { this._user = value; }
         }
     }
 }

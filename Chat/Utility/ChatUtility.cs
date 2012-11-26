@@ -1,8 +1,8 @@
 ﻿namespace ChatClientLibrary.Chat.Utility
 {
     using ChatClientLibrary.Chat.Events;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     public static class ChatUtility
     {
@@ -22,6 +22,12 @@ using Newtonsoft.Json.Linq;
                         break;
                     case "leave":
                         type = ChatActionTypes.leave;
+                        break;
+                    case "newmessage":
+                        type = ChatActionTypes.newmessage;
+                        break;
+                    case "newuser":
+                        type = ChatActionTypes.newuser;
                         break;
                     default: break;
                 }
@@ -45,7 +51,9 @@ using Newtonsoft.Json.Linq;
             NewUserEventArgs e = default(NewUserEventArgs);
             try
             {
-                e = JsonConvert.DeserializeObject<NewUserEventArgs>(dataRecieved);
+                JObject data = JsonConvert.DeserializeObject<JObject>(dataRecieved);
+                if (data != null)
+                    e = new NewUserEventArgs((string)data["Username"], (string)data["UserUniqueID"]);
             }
             catch { }
             return e;

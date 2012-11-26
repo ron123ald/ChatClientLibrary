@@ -2,6 +2,6 @@
 {
     public enum ChatActionTypes
     {
-        send, join, leave, NewMessage, NewUser
+        send, join, leave, newmessage, newuser
     }
 }
