@@ -26,6 +26,7 @@
         {
             get { return _instance ?? (_instance = (new ChatConnection())); }
         }
+
         private ChatConnection()
         {
             this._backgroundWorker = new BackgroundWorker();
@@ -43,48 +44,55 @@
         {
             try
             {
+                if (this.InternalLogEvent != null)
+                    this.InternalLogEvent(this, new Events.LogEventArgs("Connecting..."));
+                
                 this._client = new TcpClient(((ChatFactory)e.Argument).Address, ((ChatFactory)e.Argument).Port);
-                this.InternalLogEvent(this, new Events.LogEventArgs("Connected to server"));
+                this._networkStream = this._client.GetStream();
+                this._reader = new StreamReader(this._networkStream);
+                this._writer = new StreamWriter(this._networkStream);
+
+                if (this.InternalLogEvent != null)
+                    this.InternalLogEvent(this, new Events.LogEventArgs("Connected to server"));
             }
             catch (SocketException ex)
             {
-                this.InternalLogEvent(this, new Events.LogEventArgs(ex.Message));
+                if (this.InternalLogEvent != null)
+                    this.InternalLogEvent(this, new Events.LogEventArgs(ex.Message));
+                return;
             }
 
-            this._networkStream = this._client.GetStream();
-            this._reader = new StreamReader(this._networkStream);
-            this._writer = new StreamWriter(this._networkStream);
-
-            try
+            while (true)
             {
-                string dataRecieved = string.Empty;
-                while (true)
+                try
                 {
-                    dataRecieved = this._reader.ReadLine();
-                    if (!string.IsNullOrEmpty(dataRecieved))
-                    {
-                        switch (dataRecieved.GetActionType())
+                    string dataRecieved = string.Empty;
+                
+                        dataRecieved = this._reader.ReadLine();
+                        if (!string.IsNullOrEmpty(dataRecieved))
                         {
-                            case ChatActionTypes.NewMessage:
-                                /// new message comming
-                                this.InternalNewMessageEvent(this, dataRecieved.ProcessNewMessage());
-                                break;
-                            case ChatActionTypes.NewUser:
-                                /// new user 
-                                this.InternalNewUserEvent(this, dataRecieved.ProcessNewUser());
-                                break;
-                            case ChatActionTypes.leave:
-                                /// user leave
-                                this.InternalUserLeaveEvent(this, dataRecieved.ProcessUserLeave());
-                                break;
-                            default: break;
+                            switch (dataRecieved.GetActionType())
+                            {
+                                case ChatActionTypes.newmessage:
+                                    /// new message comming
+                                    this.InternalNewMessageEvent(this, dataRecieved.ProcessNewMessage());
+                                    break;
+                                case ChatActionTypes.newuser:
+                                    /// new user 
+                                    this.InternalNewUserEvent(this, dataRecieved.ProcessNewUser());
+                                    break;
+                                case ChatActionTypes.leave:
+                                    /// user leave
+                                    this.InternalUserLeaveEvent(this, dataRecieved.ProcessUserLeave());
+                                    break;
+                                default: break;
+                            }
                         }
-                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                this.InternalLogEvent(this, new Events.LogEventArgs(ex.Message, ConsoleColor.Red));
+                catch (Exception ex)
+                {
+                    this.InternalLogEvent(this, new Events.LogEventArgs(ex.Message, ConsoleColor.Red));
+                }
             }
         } 
 
@@ -92,7 +100,6 @@
 
         public void SetConnection(ChatFactory factory)
         {
-            this.InternalLogEvent(this, new Events.LogEventArgs("Connecting..."));
             this._backgroundWorker.RunWorkerAsync(factory);
         }
 
