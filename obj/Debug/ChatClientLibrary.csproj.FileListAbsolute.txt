@@ -4,3 +4,8 @@ D:\Development\_SPIKE\testClient\ChatClientLibrary\obj\Debug\ChatClientLibrary.d
 D:\Development\_SPIKE\testClient\ChatClientLibrary\obj\Debug\ChatClientLibrary.pdb
 D:\Development\_SPIKE\testClient\ChatClientLibrary\bin\Debug\Newtonsoft.Json.dll
 D:\Development\_SPIKE\testClient\ChatClientLibrary\obj\Debug\ChatClientLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Glenn.CEBU\ChatClientLibrary\bin\Debug\ChatClientLibrary.dll
+C:\Users\Glenn.CEBU\ChatClientLibrary\bin\Debug\ChatClientLibrary.pdb
+C:\Users\Glenn.CEBU\ChatClientLibrary\obj\Debug\ChatClientLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Glenn.CEBU\ChatClientLibrary\obj\Debug\ChatClientLibrary.dll
+C:\Users\Glenn.CEBU\ChatClientLibrary\obj\Debug\ChatClientLibrary.pdb
